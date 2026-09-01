@@ -11,11 +11,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract Android project
+      - name: Extract NEXX FPS project
         run: |
           unzip -o NEXX_FPS_Mobile_GitHub_Build.zip
-          ls -la
-          ls -la NEXX_FPS_Android
+          echo "Project contents:"
+          find NEXX_FPS_Android -maxdepth 3 -type f
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -36,9 +36,10 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Build APK
-        working-directory: NEXX_FPS_Android
-        run: gradle assembleDebug --no-daemon
+      - name: Build NEXX FPS APK
+        run: |
+          cd NEXX_FPS_Android
+          gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
